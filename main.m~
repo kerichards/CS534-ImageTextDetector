@@ -1,25 +1,29 @@
 colorImage = imread('Original.jpg');
 I = rgb2gray(colorImage);
 
+% Detect MSER regions.
 [mserRegions] = detectMSERFeatures(I,...
     'RegionAreaRange',[50 2000],'ThresholdDelta',6);
-
 sz = size(I);
 pixelIdxList = cellfun(@(xy)sub2ind(sz, xy(:,2), xy(:,1)), ...
     mserRegions.PixelList, 'UniformOutput', false);
 
+% Next, pack the data into a connected component struct.
 mserConnComp.Connectivity = 8;
 mserConnComp.ImageSize = sz;
 mserConnComp.NumObjects = mserRegions.Count;
 mserConnComp.PixelIdxList = pixelIdxList;
 
-mserStats = regionprops(mserConnComp, 'Area');
+% Use regionprops to measure MSER properties
+mserStats = regionprops(mserConnComp, 'area');
 
-filterIdx = [mserStats.Area] > 500;
+filterIdx = [mserStats.Area] > 150;
 
+mserStats(filterIdx) = [];
+mserRegions(filterIdx) = [];
 figure
 imshow(I)
 hold on
-plot(mserRegions, 'showPixelList', true,'showEllipses',false)
+plot(mserRegions(40), 'showPixelList', true,'showEllipses',false)
 title('MSER regions')
 hold off
