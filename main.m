@@ -13,9 +13,17 @@ mserConnComp.ImageSize = sz;
 mserConnComp.NumObjects = mserRegions.Count;
 mserConnComp.PixelIdxList = pixelIdxList;
 
-mserStats = regionprops(mserConnComp, 'Area');
+mserStats1 = regionprops(mserConnComp, 'Area');
 
-filterIdx = [mserStats.Area] > 500;
+filterIdx = [mserStats1.Area] > 200;
+
+
+mserStats1(filterIdx) = [];
+mserRegions(filterIdx) = [];
+
+mserStats = regionprops(mserConnComp,'Centroid');
+x = [mserStats.Centroid];
+
 
 figure
 imshow(I)
