@@ -1,3 +1,6 @@
+clc;
+clear;
+
 colorImage = imread('Original.jpg');
 I = rgb2gray(colorImage);
 
@@ -13,16 +16,13 @@ mserConnComp.ImageSize = sz;
 mserConnComp.NumObjects = mserRegions.Count;
 mserConnComp.PixelIdxList = pixelIdxList;
 
-mserStats = regionprops(mserConnComp, 'Area', 'Eccentricity');
+mserStats = regionprops(mserConnComp, 'Area', 'Eccentricity','Centroid');
 
 filterIdx = [mserStats.Area] > 200;
 filterIdx = filterIdx | [mserStats.Eccentricity] > .8 ;
 
-
-
 mserStats(filterIdx) = [];
 mserRegions(filterIdx) = [];
-
 
 figure
 imshow(I)
