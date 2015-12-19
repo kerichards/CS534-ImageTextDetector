@@ -8,7 +8,7 @@ mserConnComp.ImageSize = sz;
 mserConnComp.NumObjects = mserRegions.Count;
 mserConnComp.PixelIdxList = pixelIdxList;
 
-mserStats = regionprops(mserConnComp, 'Area','Perimeter', 'Eccentricity','Centroid');
+mserStats = regionprops(mserConnComp, 'Area','Perimeter', 'Eccentricity','Centroid', 'Image');
 
 filterIdx = [mserStats.Area] > areaThres;
 filterIdx = filterIdx | [mserStats.Eccentricity] > eccThres;
