@@ -1,6 +1,6 @@
 clc;
 clear;
-set(0, 'DefaultFigureWindowStyle', 'docked'); % Dock Figures
+% set(0, 'DefaultFigureWindowStyle', 'docked'); % Dock Figures
 
 colorImage = imread('Original.jpg');
 I = rgb2gray(colorImage);
@@ -52,13 +52,15 @@ minX = min(locations(:,1)) - 50;
 minY = min(locations(:,2)) - 50;
 maxX = max(locations(:,1)) + 50;
 maxY = max(locations(:,2)) + 50;
-matrix = I(minY:maxY, minX:maxX);
-figure
-imshow(matrix)
+cropped = I(minY:maxY, minX:maxX);
+figure('name', 'cropped'), imshow(cropped), title('Cropped');
 
-% Show mserRegions
-figure
-imshow(I)
+% Detect Regions (2nd time)
+[mserRegions] = detectMSERFeatures(cropped,...
+    'RegionAreaRange',[50 200],'ThresholdDelta',3);
+
+% Show cropped mserRegions
+figure('name', 'mserRegions'), imshow(cropped)
 hold on
 plot(mserRegions, 'showPixelList', true,'showEllipses',false)
 title('MSER regions')
