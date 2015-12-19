@@ -13,16 +13,15 @@ mserConnComp.ImageSize = sz;
 mserConnComp.NumObjects = mserRegions.Count;
 mserConnComp.PixelIdxList = pixelIdxList;
 
-mserStats1 = regionprops(mserConnComp, 'Area');
+mserStats = regionprops(mserConnComp, 'Area', 'Eccentricity');
 
-filterIdx = [mserStats1.Area] > 200;
+filterIdx = [mserStats.Area] > 200;
+filterIdx = filterIdx | [mserStats.Eccentricity] > .8 ;
 
 
-mserStats1(filterIdx) = [];
+
+mserStats(filterIdx) = [];
 mserRegions(filterIdx) = [];
-
-mserStats = regionprops(mserConnComp,'Centroid');
-x = [mserStats.Centroid];
 
 
 figure
