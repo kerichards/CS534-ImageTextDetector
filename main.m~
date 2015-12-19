@@ -36,14 +36,6 @@ plusAvgX = avgX + 100;
 minusAvgY = avgY - 100;
 plusAvgY = avgY + 100;
 
-filterx = cen(:,1) < minusAvgX | cen(:,1) > plusAvgX;
-filtery = cen(:,2) < minusAvgY | cen(:,2) > plusAvgY;
-filter = filterx | filtery;
-
-% 200, 600, 400
-mserStats(filter) = [];
-mserRegions(filter) = [];
-
 figure
 imshow(I)
 hold on
