@@ -1,2 +1,2 @@
 # CS534-ImageTextDetector
-detecttextinimage.wordpress.com
+https://detecttextinimage.wordpress.com
