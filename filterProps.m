@@ -1,4 +1,14 @@
 function [mserRegions, mserStats] = filterProps(mserRegions, sz, areaThres, eccThres, perThres)
+%
+% Filters the mserRegions by properties: area, eccentricity and perimeter.
+%
+% Parameters:
+%       mserRegions: regions of detected text
+%       sz: 
+%       areaThres: integer area threshold
+%       eccThres: integer eccentricity threshold
+%       perThres: integer perimeter threshold
+
 pixelIdxList = cellfun(@(xy)sub2ind(sz, xy(:,2), xy(:,1)), ...
     mserRegions.PixelList, 'UniformOutput', false);
 

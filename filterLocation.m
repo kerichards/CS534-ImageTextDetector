@@ -1,4 +1,13 @@
-function mserRegions = filterLocation(mserRegions, mserStats, threshold)
+function [mserRegions, mserStats] = filterLocation(mserRegions, mserStats, threshold)
+%
+% Filters the mserRegions by distance given by threshold, 
+% between the centers on each region
+%
+% Parameters:
+%       mserRegions: regions of detected text
+%       mserStats: used to get the centroid locations
+%       threshold: integer distance to check between regions
+
 % Filter by Location
 cen = cat(1, mserStats.Centroid);
 x = cen(:,1);
