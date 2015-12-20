@@ -89,7 +89,15 @@ for i=1:width
             maxY = max(locations(indices,2)) + 10;
             cropped2 = cropped(minY:maxY, minX:maxX);
             figure('name', 'Cropped line'), imshow(cropped2), title('Cropped image');
-            ocrtxt = ocr(cropped2);
+            Icorrected = imtophat(cropped2, strel('disk', 15));
+
+th  = graythresh(Icorrected);
+BW1 = im2bw(Icorrected, th);
+
+figure;
+imshowpair(Icorrected, BW1, 'montage');
+
+            ocrtxt = ocr(BW1,'TextLayout','Block');
             [ocrtxt.Text]
         end
     elseif i < width
@@ -103,7 +111,15 @@ for i=1:width
             maxY = max(locations(indices,2)) + 10;
             cropped2 = cropped(minY:maxY, minX:maxX);
             figure('name', 'Cropped line mid'), imshow(cropped2), title('Cropped image');
-            ocrtxt = ocr(cropped2);
+            Icorrected = imtophat(cropped2, strel('disk', 15));
+
+th  = graythresh(Icorrected);
+BW1 = im2bw(Icorrected, th);
+
+figure;
+imshowpair(Icorrected, BW1, 'montage');
+
+            ocrtxt = ocr(BW1,'TextLayOut','Block');
             [ocrtxt.Text]
         end
     elseif i == width && i ~= 1
@@ -117,8 +133,24 @@ for i=1:width
             maxY = max(locations(indices,2)) + 10;
             cropped2 = cropped(minY:maxY, minX:maxX);
             figure('name', 'Cropped line end'), imshow(cropped2), title('Cropped image');
-            ocrtxt = ocr(cropped2);
-            [ocrtxt.Text]            
+            Icorrected = imtophat(cropped2, strel('disk', 15));
+
+th  = graythresh(Icorrected);
+BW1 = im2bw(Icorrected, th);
+
+figure;
+imshowpair(Icorrected, BW1, 'montage');
+marker = imerode(Icorrected, strel('line',10,0));
+Iclean = imreconstruct(marker, Icorrected);
+
+th  = graythresh(Iclean);
+BW2 = im2bw(Iclean, th);
+
+figure;
+imshowpair(Iclean, BW2, 'montage');
+            ocrtxt = ocr(BW2,'TextLayout','Block');
+            [ocrtxt.Text]
+            
         end
     end
 end
